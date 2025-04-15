@@ -1,0 +1,55 @@
+﻿@model IEnumerable<NoteApp.Models.Note>
+
+@{
+    ViewData["Title"] = "Notlar";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Notlarım</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Yeni Not
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-truncate">@item.Title</h5>
+                        <p class="card-text small text-muted">
+                            @(item.ModifiedDate != null ?
+                                $"Düzenlenme: {item.ModifiedDate:dd.MM.yyyy HH:mm}" :
+                                $"Oluşturulma: {item.CreatedDate:dd.MM.yyyy HH:mm}")
+                        </p>
+                        <p class="card-text text-truncate mb-3">@item.Content</p>
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-eye me-1"></i> Görüntüle
+                            </a>
+                            <div>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-pencil me-1"></i> Düzenle
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger ms-1">
+                                    <i class="bi bi-trash me-1"></i> Sil
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5">
+            <i class="bi bi-journal-text display-1 text-muted"></i>
+            <p class="lead mt-3">Henüz not eklenmemiş.</p>
+            <a asp-action="Create" class="btn btn-primary mt-2">İlk notu ekle</a>
+        </div>
+    }
+</div>

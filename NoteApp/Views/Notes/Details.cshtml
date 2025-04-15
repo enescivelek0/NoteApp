@@ -1,0 +1,42 @@
+﻿@model NoteApp.Models.Note
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 mb-0">@Model.Title</h1>
+                <div>
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-pencil me-1"></i> Düzenle
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger btn-sm ms-1">
+                        <i class="bi bi-trash me-1"></i> Sil
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="text-muted small mb-3">
+                <i class="bi bi-calendar me-1"></i> Oluşturulma: @Model.CreatedDate.ToString("dd.MM.yyyy HH:mm")
+                @if (Model.ModifiedDate != null)
+                {
+                    <span class="ms-3">
+                        <i class="bi bi-pencil-square me-1"></i> Düzenlenme: @Model.ModifiedDate?.ToString("dd.MM.yyyy HH:mm")
+                    </span>
+                }
+            </p>
+            <div class="note-content">
+                @Model.Content
+            </div>
+        </div>
+        <div class="card-footer bg-white">
+            <a asp-action="Index" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-left me-1"></i> Notlara Dön
+            </a>
+        </div>
+    </div>
+</div>
